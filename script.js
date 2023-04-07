@@ -43,25 +43,10 @@ function signup() {
   const username = document.getElementById('user').value
   console.log(email, password);
   firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then(function () {
-      //   e.preventDefault();
-
-      // var user = firebase.auth().currentUser
-      // var database_ref = database.ref() 
-      var firebaseRef = firebase.database().ref('data')
-
-
-      var user_data = {
-        Username: username,
-        Email: email
-      }
-
-      firebaseRef.push(user_data)
-      // Signed in 
+    .then((result) => {
       alert("you signed up");
-      // document.getElementById("reg_form").reset()
-      // console.log(result);
-      // ...
+      window.location.href = "login.html";
+      console.log(result);
     })
     .catch((error) => {
       console.log(error.code);
@@ -79,40 +64,72 @@ function signIn() {
   const password = document.getElementById('pass').value;
 
   firebase.auth().signInWithEmailAndPassword(email, password)
-    .then((result) => {
-      sessionStorage.setItem("user", username)
-      rzp1.open()
-      // e.preventDefault();
-      // window.location.href="dashboard.html"
-      // document.write("you signed in");
-      console.log(result);
+  .then(() => {
+      sessionStorage.setItem("user",username)
+      localStorage.setItem("email", email);
+      firebase.auth().onAuthStateChanged(function (user) {
+          if (user) {
+              var userEmail = user.email;
+              var usersRef = firebase.database().ref("emails").child("data");
+              usersRef.orderByChild("email").equalTo(userEmail).once("value", function (snapshot) {
+                  if (snapshot.exists()) {
+                      console.log("Email exists in the database");
+                      window.location.href = "video.html"
+
+                  } else {
+                      console.log("Email does not exist in the database");
+                      window.location.href = "index.html"
+
+                  }
+              });
+          }
+      });
     })
-    .catch((error) => {
-      console.log(error.code);
-      console.log(error.message);
-      alert(error.code)
-    });
 }
 
 // forgot password
 
-function forgotpassword(){
+function forgotpassword() {
   const email = document.getElementById('forgpass').value;
 
   firebase.auth().sendPasswordResetEmail(email)
-  .then(() => {
-    console.log("sfdvghjk");
-    alert('Reset link is send to your Email')
-    // Password reset email sent!
-    // ..
-  })
-  .catch((error) => {
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    alert(errorCode)
-    console.log(errorCode);
-    console.log(errorMessage);
-    console.log(email);
-    // ..
-  });
+    .then(() => {
+      console.log("sfdvghjk");
+      alert('Reset link is send to your Email')
+      // Password reset email sent!
+      // ..
+    })
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      alert(errorCode)
+      console.log(errorCode);
+      console.log(errorMessage);
+      console.log(email);
+      // ..
+    });
+}
+
+function logout(){
+  firebase.auth().signOut().then(() => {
+      // Sign-out successful.
+      window.location.href = "login.html";
+    }).catch((error) => {
+      // An error happened.
+      console.log(error);
+    });
+}
+
+// payment function
+
+function buythiscourse() {
+  const login = sessionStorage.getItem("user")
+
+  if (login === null) {
+    window.location = "login.html"
+  }
+  else {
+    rzp1.open()
+  }
+
 }

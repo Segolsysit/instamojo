@@ -30,6 +30,13 @@
     <link rel="stylesheet" href="assets/plugins/aos/aos.css">
 
     <link rel="stylesheet" href="assets/css/style.css">
+
+    <script src="https://www.gstatic.com/firebasejs/9.18.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.18.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.18.0/firebase-database-compat.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    
 </head>
 
 <body class="home-three">
@@ -5094,7 +5101,7 @@
                 signoutlink.href = "register.html"
             }
             else {
-                userlink.innerText = user
+                userlink.innerText = currentuser
                 userlink.classList.replace("nav-link", "btn")
                 userlink.classList.add("btn-primary")
                 userlink.href = "#"

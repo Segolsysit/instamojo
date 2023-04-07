@@ -18,6 +18,16 @@
     <link rel="stylesheet" href="assets/css/feather.css">
 
     <link rel="stylesheet" href="assets/css/style.css">
+
+    <script src="https://www.gstatic.com/firebasejs/9.18.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.18.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.18.0/firebase-database-compat.js"></script>
+    
+
+    
+    
+
 </head>
 
 <body>
@@ -178,10 +188,10 @@
                         </div>
                         <ul class="nav header-navbar-rht align-items-center">
                             <li class="nav-item">
-                                <a class="nav-link login-three-head button" href="login.html"><span>Login</span></a>
+                                <a id="userlink" class="nav-link login-three-head button" href="#"><span>Login</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link signin-three-head" href="register.html">Register</a>
+                                <a id="signoutlink" class="nav-link signin-three-head" href="#">Register</a>
                             </li>
                         </ul>
                     </div>
@@ -671,7 +681,7 @@
                                                             class="feather-share-2"></i> Share</a>
                                                 </div>
                                             </div>
-                                            <a href="checkout.html" class="btn btn-enroll w-100">Enroll Now</a>
+                                            <button onclick="buythiscourse()" class="btn btn-enroll w-100">Enroll Now</button>
                                         </div>
                                     </div>
                                 </div>
@@ -842,6 +852,57 @@
     <script src="assets/js/bootstrap.bundle.min.js"></script>
 
     <script src="assets/js/script.js"></script>
+
+    <script>
+        let userlink = document.getElementById('userlink')
+        let signoutlink = document.getElementById('signoutlink')
+        var currentuser = null
+        // const user = firebase.auth().currentUser;
+
+        function getusername() {
+            // const user = firebase.auth().currentUser;
+            // if (user !== null) {
+            //     const username = user.Username;
+            // }
+
+            currentuser = sessionStorage.getItem('user')
+        }
+
+        function logout() {
+            sessionStorage.removeItem('user')
+            window.location = "index.html"
+        }
+
+        window.onload = function () {
+            getusername();
+            if (currentuser === null) {
+                userlink.innerText = "Login"
+                userlink.classList.replace("nav-link", "btn")
+                userlink.classList.add("btn-primary")
+                userlink.href = "login.html"
+
+                signoutlink.innerText = "Register"
+                signoutlink.classList.replace("nav-link", "btn")
+                signoutlink.classList.add("btn-success")
+                signoutlink.href = "register.html"
+            }
+            else {
+                userlink.innerText = currentuser
+                userlink.classList.replace("nav-link", "btn")
+                userlink.classList.add("btn-primary")
+                userlink.href = "#"
+
+                signoutlink.innerText = "sign out"
+                signoutlink.classList.replace("nav-link", "btn")
+                signoutlink.classList.add("btn-success")
+                signoutlink.href = "javascript:logout()"
+            }
+        }
+    </script>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <script src="script.js"></script>
 </body>
 
 <!-- Mirrored from dreamslms.dreamguystech.com/html/course-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 29 Mar 2023 06:44:14 GMT -->
