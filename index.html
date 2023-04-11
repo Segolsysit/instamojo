@@ -29,6 +29,13 @@
     <link rel="stylesheet" href="assets/plugins/aos/aos.css">
 
     <link rel="stylesheet" href="assets/css/style.css">
+
+    <script src="https://www.gstatic.com/firebasejs/9.18.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.18.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.18.0/firebase-database-compat.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    
 </head>
 
 <body class="home-three">
@@ -96,10 +103,11 @@
                         </div>
                         <ul class="nav header-navbar-rht align-items-center">
                             <li class="nav-item">
-                                <a class="nav-link login-three-head button" href="login.html"><span>Login</span></a>
+                                <a id="userlink" class="nav-link login-three-head button"
+                                    href="#"><span>Login</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link signin-three-head" href="register.html">Register</a>
+                                <a id="signoutlink" class="nav-link signin-three-head" href="#">Register</a>
                             </li>
                         </ul>
                     </div>
@@ -502,7 +510,44 @@
         </section>
 
 
- 
+        <section class="home-three-courses">
+            <div class="container">
+                <div class="favourite-course-sec">
+                    <div class="row">
+                        <div class="home-three-head section-header-title" data-aos="fade-up">
+                            <div class="row align-items-center d-flex justify-content-between">
+                                <div class="col-lg-6 col-sm-8">
+                                    <h2>Courses</h2>
+                                </div>
+                                <div class="col-lg-6 col-sm-4">
+                                    <div class="see-all">
+                                        <a href="#">See all<span class="see-all-icon"><i
+                                                    class="fas fa-arrow-right"></i></span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="all-corses-main">
+                            <div class="tab-content">
+                                <div class="nav tablist-three" role="tablist">
+                                    <a class="nav-tab  me-3" data-bs-toggle="tab" href="#alltab"
+                                        role="tab">All</a>
+                                    <a class="nav-tab me-3" data-bs-toggle="tab" href="#mostpopulartab" role="tab">Most
+                                        popular</a>
+                                    <a class="nav-tab me-3" data-bs-toggle="tab" href="#businesstab"
+                                        role="tab">Business</a>
+                                    <a class="nav-tab me-3" data-bs-toggle="tab" href="#designtab" role="tab">Design</a>
+                                    <a class="nav-tab me-3" data-bs-toggle="tab" href="#designtab" role="tab">Music</a>
+                                    <a class="nav-tab me-3" data-bs-toggle="tab" href="#programmingtab"
+                                        role="tab">Programming</a>
+                                    <a class="nav-tab me-3" data-bs-toggle="tab" href="#databasetab"
+                                        role="tab">Database</a>
+                                </div>
+                                <div class="tab-content">
+
+                                    <div class="tab-pane fade  show" id="alltab" role="tabpanel">
+                                        <div class="all-course">
+                                            <div class="row">
 
 
 
@@ -1133,6 +1178,56 @@
     <script src="assets/plugins/slick/slick.js"></script>
 
     <script src="assets/plugins/swiper/js/swiper.min.js"></script>
+
+    <script>
+        let userlink = document.getElementById('userlink')
+        let signoutlink = document.getElementById('signoutlink')
+        var currentuser = null
+        // const user = firebase.auth().currentUser;
+
+        function getusername() { 
+            currentuser = sessionStorage.getItem('user')
+        }
+
+        function logout() {
+            sessionStorage.removeItem('user')
+            window.location = "index.html"
+            firebase.auth().signOut().then(() => {
+                // Sign-out successful.
+                localStorage.removeItem("email");
+                window.location.href = "login.html";
+            }).catch((error) => {
+                // An error happened.
+                console.log(error);
+            });
+        }
+
+        window.onload = function () {
+            getusername();
+            if (currentuser === null) {
+                userlink.innerText = "Login"
+                userlink.classList.replace("nav-link", "btn")
+                userlink.classList.add("btn-primary")
+                userlink.href = "login.html"
+
+                signoutlink.innerText = "Register"
+                signoutlink.classList.replace("nav-link", "btn")
+                signoutlink.classList.add("btn-success")
+                signoutlink.href = "register.html"
+            }
+            else {
+                userlink.innerText = currentuser
+                userlink.classList.replace("nav-link", "btn")
+                userlink.classList.add("btn-primary")
+                userlink.href = "#"
+
+                signoutlink.innerText = "sign out"
+                signoutlink.classList.replace("nav-link", "btn")
+                signoutlink.classList.add("btn-success")
+                signoutlink.href = "javascript:logout()"
+            }
+        }
+    </script>
 
     <script src="assets/js/script.js"></script>
 </body>
