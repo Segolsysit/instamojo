@@ -893,6 +893,7 @@
                 firebase1Ref.push(payment_data)
                 console.log(res);
             },
+            "callback_url": 'course-watch.html',
             "prefill": {
                 "name": "Gaurav Kumar", //your customer's name
                 "email": "gaurav.kumar@example.com",
@@ -962,7 +963,7 @@
             const login = sessionStorage.getItem("user")
 
             if (login === null) {
-                window.location = "login.html"
+                window.location = "register.html"
             }
             else {
                 firebase.auth().onAuthStateChanged(function (user) {
