@@ -1,7 +1,4 @@
-/*
-* Author: Hamza mohamet
-* URL: https://foxthemes.net
-*/
+
 /* -------------------------------------------------------------- */
 /* Default Colors
 ----------------------------------------------------------------- */
@@ -8921,6 +8918,10 @@ header .header_inner,
 
 .cd-secondary-nav ul li:not(:last-child) {
   padding-right: 10px;
+}
+
+.course-watch{
+  margin-top: 71px;
 }
 
 .course-watch .sidebar {
