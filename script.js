@@ -81,7 +81,7 @@ function signIn() {
               usersRef.orderByChild("email").equalTo(userEmail).once("value", function (snapshot) {
                   if (snapshot.exists()) {
                       console.log("Email exists in the database");
-                      window.location.href = "course-watch.html"
+                      window.location.href = "course-student.html"
 
                   } else {
                       console.log("Email does not exist in the database");

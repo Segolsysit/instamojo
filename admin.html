@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://www.gstatic.com/firebasejs/9.18.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.18.0/firebase-auth-compat.js"></script>
+</head>
+
+<body>
+    <label>Email</label><br />
+    <input id="advemail" placeholder="enter your email"><br /><br />
+    <label>Password</label><br />
+    <input id="advpassword" placeholder="enter your Passwords"><br /><br />
+    <button onclick="signup()">register</button>
+
+
+    <script>
+
+        const firebaseApp = firebase.initializeApp({
+            apiKey: "AIzaSyAFdtO7NYgHb4DbWXfirZpJpA8UDrMfbKs",
+            authDomain: "advanced-course-data-base.firebaseapp.com",
+            projectId: "advanced-course-data-base",
+            storageBucket: "advanced-course-data-base.appspot.com",
+            messagingSenderId: "327666396191",
+            appId: "1:327666396191:web:aec68df5a22197d72af92a"
+        });
+
+        const auth = firebaseApp.auth();
+
+        function signup() {
+
+            const email = document.getElementById('advemail').value;
+            const password = document.getElementById('advpassword').value;
+
+            console.log(email, password);
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+                .then(function () {
+                    // Signed in 
+                    alert("you signed up");
+                    // document.getElementById("reg_form").reset()
+                    // console.log(result);
+                    // ...
+                })
+                .catch((error) => {
+                    console.log(error.code);
+                    console.log(error.message);
+                    // ..
+                });
+        }
+
+
+    </script>
+</body>
+
+</html>
