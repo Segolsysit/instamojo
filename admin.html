@@ -6,9 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="https://www.gstatic.com/firebasejs/9.18.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.18.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.19.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.19.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.19.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.19.0/firebase-app.js"> </script>
+    <script src="https://www.gstatic.com/firebasejs/9.19.0/firebase-database-compat.js"> </script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js"></script>
 </head>
 
 <body>
@@ -16,6 +19,12 @@
     <input id="advemail" placeholder="enter your email"><br /><br />
     <label>Password</label><br />
     <input id="advpassword" placeholder="enter your Passwords"><br /><br />
+    <select id="course">
+        <option value="course 1">course 1</option>
+        <option value="course 2">course 2</option>
+        <option value="course 3">course 3</option>
+        <option value="course 4">course 4</option>
+    </select>
     <button onclick="signup()">register</button>
 
 
@@ -36,11 +45,18 @@
 
             const email = document.getElementById('advemail').value;
             const password = document.getElementById('advpassword').value;
+            const course = document.getElementById('course').value;
+            var firebaseRef = firebase.database().ref(`${course}`)
+            var coursevalue = {
+                email:email
+            }
 
             console.log(email, password);
             firebase.auth().createUserWithEmailAndPassword(email, password)
                 .then(function () {
                     // Signed in 
+                    console.log(course);
+                    firebaseRef.push(coursevalue)
                     alert("you signed up");
                     // document.getElementById("reg_form").reset()
                     // console.log(result);
