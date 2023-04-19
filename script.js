@@ -96,7 +96,7 @@ function signIn() {
                 alert('You are already logged in on another device');
               });
             } else {
-              let firebaseref  =firebase.database().ref('/users/' + user.uid + '/active').set(true);
+              let firebaseref  =firebase.database().ref('/users/' + user.uid + '/active').push(true);
               const itemref = firebase.database().ref('users/' + firebaseref.key)
               localStorage.setItem("firebasekey",user.uid)
               
