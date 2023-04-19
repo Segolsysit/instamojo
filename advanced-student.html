@@ -94,7 +94,7 @@
                         <ul class="nav header-navbar-rht align-items-center">
 
                             <li class="nav-item">
-                                <a id="signoutlink" class="nav-link signin-three-head" href="#">Register</a>
+                                <a id="signoutlink" class="nav-link signin-three-head" href="#">login</a>
                             </li>
                         </ul>
                     </div>
@@ -213,7 +213,7 @@
                                                         <p>0% Completed</p>
                                                     </div>
                                                     <div class="start-leason d-flex align-items-center">
-                                                        <a onclick="buythiscourse2(s)" class="btn btn-primary">Start
+                                                        <a onclick="buythiscourse2()" class="btn btn-primary">Start
                                                             Lesson</a>
                                                     </div>
                                                 </div>
@@ -253,7 +253,7 @@
                                                         <p>0% Completed</p>
                                                     </div>
                                                     <div class="start-leason d-flex align-items-center">
-                                                        <a href="course-lesson.html" class="btn btn-primary">Start
+                                                        <a onclick="buythiscourse3()" class="btn btn-primary">Start
                                                             Lesson</a>
                                                     </div>
                                                 </div>
@@ -634,6 +634,9 @@
             var currentuser = null
             // const user = firebase.auth().currentUser;
 
+            function getusername() { 
+            currentuser = sessionStorage.getItem('advuser')
+        }
 
             function logout() {
                 sessionStorage.removeItem('user')
@@ -649,14 +652,14 @@
             }
 
             window.onload = function () {
-                // getusername();
+                getusername();
                 if (currentuser === null) {
-                    userlink.innerText = "Login"
-                    userlink.classList.replace("nav-link", "btn")
-                    userlink.classList.add("btn-primary")
-                    userlink.href = "login.html"
+                    // userlink.innerText = "Login"
+                    // userlink.classList.replace("nav-link", "btn")
+                    // userlink.classList.add("btn-primary")
+                    // userlink.href = "login.html"
 
-                    signoutlink.innerText = "Register"
+                    signoutlink.innerText = "Login"
                     signoutlink.classList.replace("nav-link", "btn")
                     signoutlink.classList.add("btn-success")
                     signoutlink.href = "register.html"
@@ -670,27 +673,28 @@
                 }
             }
 
-            function buythiscourses() {
+            function buythiscourse() {
                 // var rzp1 = new Razorpay(options);sss
                 const login = sessionStorage.getItem("advuser")
 
                 if (login === null) {
-                    window.location = "register.html"
+                    window.location = "advanced-course-login.html"
                 }
                 else {
                     firebase.auth().onAuthStateChanged(function (user) {
                         if (user) {
-                            // var userEmail = user.email;
+                            var userEmail = user.email;
                             var usersRef = firebase.database().ref("course 1");
                             usersRef.orderByChild("email").equalTo(userEmail).once("value", function (snapshot) {
                                 if (snapshot.exists()) {
                                     console.log("Email exists in the database");
-                                    alert("you already pay for this course ")
+                                    // alert("you already pay for this course ")
                                     window.location = "course-watch.html"
 
                                 }
                                 else {
-                                    window.location = "advanced-student-watch.html"
+                                    alert("you can't pay for this course")
+                                    window.location = "advanced-student.html"
                                 }
                             });
                         }
@@ -699,62 +703,59 @@
 
             }
 
-
             function buythiscourse2() {
-                let a = 600;
-                var options = {
-                    "key": "rzp_test_EoCLS7YwPQtVLo", // Enter the Key ID generated from the Dashboard
-                    "amount": a * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-                    "currency": "INR",
-                    "name": "Acme Corp", //your business name
-                    "description": "Test Transaction",
-                    "image": "https://example.com/your_logo",
-                    "handler": function (res) {
-                        var firebase1Ref = firebase.database().ref('course2')
-                        let em = localStorage.getItem("email")
-                        var razorpayPaymentId = res.razorpay_payment_id;
-                        var payment_data = {
-                            razorpayPaymentId: razorpayPaymentId,
-                            email: em
-                        }
-                        firebase1Ref.push(payment_data)
-                        console.log(res);
-                    },
-                    "callback_url": 'course-watch.html',
-                    "prefill": {
-                        "name": "Gaurav Kumar", //your customer's name
-                        "email": "gaurav.kumar@example.com",
-                        "contact": "9000090000"
-                    },
-                    "notes": {
-                        "address": "Razorpay Corporate Office"
-                    },
-                    "theme": {
-                        "color": "#3399cc"
-                    }
-                };
-                var rzp1 = new Razorpay(options);
-                const login = sessionStorage.getItem("user")
+                // var rzp1 = new Razorpay(options);sss
+                const login = sessionStorage.getItem("advuser")
 
                 if (login === null) {
-                    window.location = "register.html"
+                    window.location = "advanced-course-login.html"
                 }
                 else {
                     firebase.auth().onAuthStateChanged(function (user) {
                         if (user) {
                             var userEmail = user.email;
-                            var usersRef = firebase.database().ref("course2");
+                            var usersRef = firebase.database().ref("course 2");
                             usersRef.orderByChild("email").equalTo(userEmail).once("value", function (snapshot) {
                                 if (snapshot.exists()) {
                                     console.log("Email exists in the database");
-                                    alert("you already pay for this course ")
+                                    // alert("you already pay for this course ")
                                     window.location = "course-watch.html"
 
                                 }
                                 else {
-                                    rzp1.open().then(() => {
-                                        window.location = "course-watch.html"
-                                    })
+                                    alert("you can't pay for this course")
+                                    window.location = "advanced-student.html"
+                                }
+                            });
+                        }
+                    });
+                }
+
+            }
+
+            
+            function buythiscourse3() {
+                // var rzp1 = new Razorpay(options);sss
+                const login = sessionStorage.getItem("advuser")
+
+                if (login === null) {
+                    window.location = "advanced-course-login.html"
+                }
+                else {
+                    firebase.auth().onAuthStateChanged(function (user) {
+                        if (user) {
+                            var userEmail = user.email;
+                            var usersRef = firebase.database().ref("course 3");
+                            usersRef.orderByChild("email").equalTo(userEmail).once("value", function (snapshot) {
+                                if (snapshot.exists()) {
+                                    console.log("Email exists in the database");
+                                    // alert("you already pay for this course ")
+                                    window.location = "course-watch.html"
+
+                                }
+                                else {
+                                    alert("you can't pay for this course")
+                                    window.location = "advanced-student.html"
                                 }
                             });
                         }
@@ -777,6 +778,7 @@
     <script src="assets/js/script.js"></script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script src="script.js"></script>
+    <script src="advscript.js"></script>
 </body>
 
 <!-- Mirrored from dreamslms.dreamguystech.com/html/course-student.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 29 Mar 2023 06:45:15 GMT -->

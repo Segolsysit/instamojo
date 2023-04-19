@@ -11,10 +11,15 @@
     <script src="https://www.gstatic.com/firebasejs/9.19.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.19.0/firebase-app.js"> </script>
     <script src="https://www.gstatic.com/firebasejs/9.19.0/firebase-database-compat.js"> </script>
-    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.19.0/firebase-auth.js"></script>
+    <!-- <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-functions.js"></script> -->
+    <script src="https://www.gstatic.com/firebasejs/9.19.0/firebase-messaging.js"></script>
 </head>
 
 <body>
+    <label>Name</label><br />
+    <input id="advname" placeholder="enter your Name"><br /><br />
     <label>Email</label><br />
     <input id="advemail" placeholder="enter your email"><br /><br />
     <label>Password</label><br />
@@ -24,7 +29,9 @@
         <option value="course 2">course 2</option>
         <option value="course 3">course 3</option>
         <option value="course 4">course 4</option>
-    </select>
+    </select><br /><br />
+    <label>number</label><br />
+    <input id="number"><br /><br />
     <button onclick="signup()">register</button>
 
 
@@ -42,13 +49,18 @@
         const auth = firebaseApp.auth();
 
         function signup() {
-
+            const name = document.getElementById('advname').value;
             const email = document.getElementById('advemail').value;
             const password = document.getElementById('advpassword').value;
             const course = document.getElementById('course').value;
+            const number = document.getElementById('number').value;
             var firebaseRef = firebase.database().ref(`${course}`)
             var coursevalue = {
-                email:email
+                name: name,
+                email: email,
+                password: password,
+                number: number,
+                course: course
             }
 
             console.log(email, password);
@@ -58,6 +70,48 @@
                     console.log(course);
                     firebaseRef.push(coursevalue)
                     alert("you signed up");
+                    // Initialize Messaging
+                    var messaging = firebase.messaging();
+
+                    // Request permission to send notifications
+                    messaging.requestPermission().then(function () {
+                        console.log('Notification permission granted.');
+
+                        // Get the token for the current device
+                        messaging.getToken().then(function (token) {
+                            console.log('FCM token:', token);
+
+                            // Send an SMS message
+                            var smsMessage = {
+                                to: `+91 ${number}`, // recipient's phone number
+                                body: 'Hello, this is a test message!'
+                            };
+                            // Send the SMS message using FCM
+                            fetch('https://fcm.googleapis.com/fcm/send', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': 'key=YOUR_SERVER_KEY'
+                                },
+                                body: JSON.stringify({
+                                    to: token,
+                                    data: {
+                                        message: JSON.stringify(smsMessage),
+                                        type: 'sms'
+                                    }
+                                })
+                            }).then(function (response) {
+                                console.log('SMS message sent successfully.');
+                            }).catch(function (error) {
+                                console.error('Error sending SMS message:', error);
+                            });
+                        }).catch(function (error) {
+                            console.error('Error getting FCM token:', error);
+                        });
+                    }).catch(function (error) {
+                        console.error('Error requesting notification permission:', error);
+                    });
+
                     // document.getElementById("reg_form").reset()
                     // console.log(result);
                     // ...

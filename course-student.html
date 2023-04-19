@@ -87,12 +87,12 @@
                                 <li class="has-submenu ">
                                     <a href="support.html">Contact Us</a>
                                 </li>
-                              
-                                
+
+
                             </ul>
                         </div>
                         <ul class="nav header-navbar-rht align-items-center">
-                         
+
                             <li class="nav-item">
                                 <a id="signoutlink" class="nav-link signin-three-head" href="#">Register</a>
                             </li>
@@ -509,7 +509,13 @@
                                         <img class="img-fluid" src="assets/img/logo/logo.png" alt="logo">
                                     </div>
                                     <div class="footer-three-about">
-                                        <p>We translate our vision into real output by nurturing the natural creativity of our students with proven creative techniques and by enhancing their creative productivity using smart software. This twin-fold pedagogical strategy makes our students both creative and smart. In addition, we also ensure that the students gain technical and commercial knowledge that the profession demands so that they become readily employable and successful entrepreneurs.
+                                        <p>We translate our vision into real output by nurturing the natural creativity
+                                            of our students with proven creative techniques and by enhancing their
+                                            creative productivity using smart software. This twin-fold pedagogical
+                                            strategy makes our students both creative and smart. In addition, we also
+                                            ensure that the students gain technical and commercial knowledge that the
+                                            profession demands so that they become readily employable and successful
+                                            entrepreneurs.
 
                                         </p>
                                     </div>
@@ -533,10 +539,10 @@
                                     <h6 class="footer-three-title">Courses List</h6>
                                     <ul>
                                         <li><a href="course-details.html">Aari works</a></li>
-                                        <li><a  href="course-details.html">Textile Designs</a></li>
-                                        <li><a  href="course-details.html">Embroidery</a></li>
+                                        <li><a href="course-details.html">Textile Designs</a></li>
+                                        <li><a href="course-details.html">Embroidery</a></li>
                                         <li><a href="course-details.html">Hand designing</a></li>
-                                        <li><a  href="course-details.html">Fasion Designing</a></li>
+                                        <li><a href="course-details.html">Fasion Designing</a></li>
                                     </ul>
                                 </div>
 
@@ -613,57 +619,57 @@
 
         <script>
 
-const firebaseApp = firebase.initializeApp({
-            apiKey: "AIzaSyCVj7bifzfFIvDW1uBMFiWU2CnJEkHgS2Q",
-            authDomain: "database-e7808.firebaseapp.com",
-            projectId: "database-e7808",
-            storageBucket: "database-e7808.appspot.com",
-            messagingSenderId: "806749812012",
-            appId: "1:806749812012:web:4438f4f7efe27b5d1ba889"
-        });
+            const firebaseApp = firebase.initializeApp({
+                apiKey: "AIzaSyCVj7bifzfFIvDW1uBMFiWU2CnJEkHgS2Q",
+                authDomain: "database-e7808.firebaseapp.com",
+                projectId: "database-e7808",
+                storageBucket: "database-e7808.appspot.com",
+                messagingSenderId: "806749812012",
+                appId: "1:806749812012:web:4438f4f7efe27b5d1ba889"
+            });
 
-        let a = 600;
-        var options = {
-            "key": "rzp_test_EoCLS7YwPQtVLo", // Enter the Key ID generated from the Dashboard
-            "amount": a * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-            "currency": "INR",
-            "name": "Acme Corp", //your business name
-            "description": "Test Transaction",
-            "image": "https://example.com/your_logo",
-            "handler": function (res) {
-                var firebase1Ref = firebase.database().ref('data')
-                let em = localStorage.getItem("email")
-                var razorpayPaymentId = res.razorpay_payment_id;
-                var payment_data = {
-                    razorpayPaymentId: razorpayPaymentId,
-                    email: em
+            let a = 600;
+            var options = {
+                "key": "rzp_test_EoCLS7YwPQtVLo", // Enter the Key ID generated from the Dashboard
+                "amount": a * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                "currency": "INR",
+                "name": "Acme Corp", //your business name
+                "description": "Test Transaction",
+                "image": "https://example.com/your_logo",
+                "handler": function (res) {
+                    var firebase1Ref = firebase.database().ref('data')
+                    let em = localStorage.getItem("email")
+                    var razorpayPaymentId = res.razorpay_payment_id;
+                    var payment_data = {
+                        razorpayPaymentId: razorpayPaymentId,
+                        email: em
+                    }
+                    firebase1Ref.push(payment_data)
+                    console.log(res);
+                },
+                "callback_url": 'course-watch.html',
+                "prefill": {
+                    "name": "Gaurav Kumar", //your customer's name
+                    "email": "gaurav.kumar@example.com",
+                    "contact": "9000090000"
+                },
+                "notes": {
+                    "address": "Razorpay Corporate Office"
+                },
+                "theme": {
+                    "color": "#3399cc"
                 }
-                firebase1Ref.push(payment_data)
-                console.log(res);
-            },
-            "callback_url": 'course-watch.html',
-            "prefill": {
-                "name": "Gaurav Kumar", //your customer's name
-                "email": "gaurav.kumar@example.com",
-                "contact": "9000090000"
-            },
-            "notes": {
-                "address": "Razorpay Corporate Office"
-            },
-            "theme": {
-                "color": "#3399cc"
-            }
-        };
+            };
 
             let userlink = document.getElementById('userlink')
             let signoutlink = document.getElementById('signoutlink')
             var currentuser = null
             // const user = firebase.auth().currentUser;
-    
-            function getusername() { 
+
+            function getusername() {
                 currentuser = sessionStorage.getItem('user')
             }
-    
+
             function logout() {
                 sessionStorage.removeItem('user')
                 window.location = "index.html"
@@ -676,7 +682,7 @@ const firebaseApp = firebase.initializeApp({
                     console.log(error);
                 });
             }
-    
+
             window.onload = function () {
                 getusername();
                 if (currentuser === null) {
@@ -684,147 +690,177 @@ const firebaseApp = firebase.initializeApp({
                     userlink.classList.replace("nav-link", "btn")
                     userlink.classList.add("btn-primary")
                     userlink.href = "login.html"
-    
+
                     signoutlink.innerText = "Register"
                     signoutlink.classList.replace("nav-link", "btn")
                     signoutlink.classList.add("btn-success")
                     signoutlink.href = "register.html"
                 }
                 else {
-                
+
                     signoutlink.innerText = "sign out"
                     signoutlink.classList.replace("nav-link", "btn")
                     signoutlink.classList.add("btn-success")
                     signoutlink.href = "javascript:logout()"
                 }
             }
-
+var df;
             function buythiscourse() {
                 let a = 600;
-        var options = {
-            "key": "rzp_test_EoCLS7YwPQtVLo", // Enter the Key ID generated from the Dashboard
-            "amount": a * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-            "currency": "INR",
-            "name": "Acme Corp", //your business name
-            "description": "Test Transaction",
-            "image": "https://example.com/your_logo",
-            "handler": function (res) {
-                var firebase1Ref = firebase.database().ref('data')
-                let em = localStorage.getItem("email")
-                var razorpayPaymentId = res.razorpay_payment_id;
-                var payment_data = {
-                    razorpayPaymentId: razorpayPaymentId,
-                    email: em
-                }
-                firebase1Ref.push(payment_data)
-                console.log(res);
-            },
-            "callback_url": 'course-watch.html',
-            "prefill": {
-                "name": "Gaurav Kumar", //your customer's name
-                "email": "gaurav.kumar@example.com",
-                "contact": "9000090000"
-            },
-            "notes": {
-                "address": "Razorpay Corporate Office"
-            },
-            "theme": {
-                "color": "#3399cc"
-            }
-        };
-            var rzp1 = new Razorpay(options);
-            const login = sessionStorage.getItem("user")
+                var options = {
+                    "key": "rzp_test_EoCLS7YwPQtVLo", // Enter the Key ID generated from the Dashboard
+                    "amount": a * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                    "currency": "INR",
+                    "name": "Acme Corp", //your business name
+                    "description": "Test Transaction",
+                    "image": "https://example.com/your_logo",
+                    "handler": function (res) {
 
-            if (login === null) {
-                window.location = "register.html"
-            }
-            else {
-                firebase.auth().onAuthStateChanged(function (user) {
-                    if (user) {
-                        var userEmail = user.email;
-                        var usersRef = firebase.database().ref("data");
-                        usersRef.orderByChild("email").equalTo(userEmail).once("value", function (snapshot) {
-                            if (snapshot.exists()) {
-                                console.log("Email exists in the database");
-                                alert("you already pay for this course ")
-                                window.location="course-watch.html"
+                        var firebase2Ref = firebase.database().ref('expery-data-1')
+                        let em = localStorage.getItem("email")
+                        var razorpayPaymentId = res.razorpay_payment_id;
 
-                            } 
-                            else {
-                                rzp1.open().then(() => {
-                                    window.location="course-watch.html"
-                                })
-                            }
-                        });
+                        const myTimeout = setTimeout(videoexpery, 300000);
+                        var payment_data = {
+                            razorpayPaymentId: razorpayPaymentId,
+                            email: em,
+                            // time: formattedTime
+                        }
+                        var firebase1Ref = firebase.database().ref('data').push(payment_data);
+                        // setTimeout(() => {
+                        //     console.log(firebase1Ref.key);
+                        //     firebase.database().ref('data/' + firebase1Ref.key).remove();
+
+                        // }, 300000)
+                        function videoexpery(){
+                            firebase2Ref.push(payment_data)
+                        }
+                        console.log(res);
+                    },
+                    "callback_url": 'course-watch.html',
+                    "prefill": {
+                        "name": "Gaurav Kumar", //your customer's name
+                        "email": "gaurav.kumar@example.com",
+                        "contact": "9000090000"
+                    },
+                    "notes": {
+                        "address": "Razorpay Corporate Office"
+                    },
+                    "theme": {
+                        "color": "#3399cc"
                     }
-                });
+                };
+                var rzp1 = new Razorpay(options);
+                const login = sessionStorage.getItem("user")
+
+                if (login === null) {
+                    window.location = "register.html"
+                }
+                else {
+                    firebase.auth().onAuthStateChanged(function (user) {
+                        if (user) {
+                            var userEmail = user.email;
+                            var usersRef = firebase.database().ref("data");
+                            // var singleuser = firebase.database().ref('data/' + firebase1Ref.key)
+                            usersRef.orderByChild("email").equalTo(userEmail).once("value", function (snapshot) {
+                                if (snapshot.exists()) {
+                                    // const data = snapshot.val()
+                                    // var arr=[];
+                                    // arr.push(data);
+                                    // console.log(singleuser);
+                                    // console.log(data);
+                                    // console.log(data.singleuser.time);
+                                    var userRef = firebase.database().ref("expery-data-1")
+                                    userRef.orderByChild("email").equalTo(userEmail).once("value",function(snapshot){
+                                        if(snapshot.exists()){
+                                            alert("your course valdity was over if you want to see the video purchase the course again for one year")
+                                            rzp1.open()
+                                        }
+                                        else{
+                                            window.location="course-watch.html"
+                                        }
+                                    })
+                                    // console.log(snapshot);
+                                    // alert("you already pay for this course ")
+                                    // window.location="course-watch.html"
+
+                                }
+                                else {
+                                    console.log(snapshot);
+                                    rzp1.open().then(() => {
+                                        window.location = "course-watch.html"
+                                    })
+                                }
+                            });
+                        }
+                    });
+                }
+
             }
 
-        }
 
-
-        function buythiscourse2() {
+            function buythiscourse2() {
                 let a = 600;
-        var options = {
-            "key": "rzp_test_EoCLS7YwPQtVLo", // Enter the Key ID generated from the Dashboard
-            "amount": a * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-            "currency": "INR",
-            "name": "Acme Corp", //your business name
-            "description": "Test Transaction",
-            "image": "https://example.com/your_logo",
-            "handler": function (res) {
-                var firebase1Ref = firebase.database().ref('course2')
-                let em = localStorage.getItem("email")
-                var razorpayPaymentId = res.razorpay_payment_id;
-                var payment_data = {
-                    razorpayPaymentId: razorpayPaymentId,
-                    email: em
-                }
-                firebase1Ref.push(payment_data)
-                console.log(res);
-            },
-            "callback_url": 'course-watch.html',
-            "prefill": {
-                "name": "Gaurav Kumar", //your customer's name
-                "email": "gaurav.kumar@example.com",
-                "contact": "9000090000"
-            },
-            "notes": {
-                "address": "Razorpay Corporate Office"
-            },
-            "theme": {
-                "color": "#3399cc"
-            }
-        };
-            var rzp1 = new Razorpay(options);
-            const login = sessionStorage.getItem("user")
-
-            if (login === null) {
-                window.location = "register.html"
-            }
-            else {
-                firebase.auth().onAuthStateChanged(function (user) {
-                    if (user) {
-                        var userEmail = user.email;
-                        var usersRef = firebase.database().ref("course2");
-                        usersRef.orderByChild("email").equalTo(userEmail).once("value", function (snapshot) {
-                            if (snapshot.exists()) {
-                                console.log("Email exists in the database");
-                                alert("you already pay for this course ")
-                                window.location="course-watch.html"
-
-                            } 
-                            else {
-                                rzp1.open().then(() => {
-                                    window.location="course-watch.html"
-                                })
-                            }
-                        });
+                var options = {
+                    "key": "rzp_test_EoCLS7YwPQtVLo", // Enter the Key ID generated from the Dashboard
+                    "amount": a * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                    "currency": "INR",
+                    "name": "Acme Corp", //your business name
+                    "description": "Test Transaction",
+                    "image": "https://example.com/your_logo",
+                    "handler": function (res) {
+                        var firebase1Ref = firebase.database().ref('course2')
+                        let em = localStorage.getItem("email")
+                        var razorpayPaymentId = res.razorpay_payment_id;
+                        var payment_data = {
+                            razorpayPaymentId: razorpayPaymentId,
+                            email: em
+                        }
+                        firebase1Ref.push(payment_data)
+                        console.log(res);
+                    },
+                    "callback_url": 'course-watch.html',
+                    "prefill": {
+                        "name": "Gaurav Kumar", //your customer's name
+                        "email": "gaurav.kumar@example.com",
+                        "contact": "9000090000"
+                    },
+                    "notes": {
+                        "address": "Razorpay Corporate Office"
+                    },
+                    "theme": {
+                        "color": "#3399cc"
                     }
-                });
-            }
+                };
+                var rzp1 = new Razorpay(options);
+                const login = sessionStorage.getItem("user")
 
-        }
+                if (login === null) {
+                    window.location = "register.html"
+                }
+                else {
+                    firebase.auth().onAuthStateChanged(function (user) {
+                        if (user) {
+                            var userEmail = user.email;
+                            var usersRef = firebase.database().ref("course2");
+                            usersRef.orderByChild("email").equalTo(userEmail).once("value", function (snapshot) {
+                                if (snapshot.exists()) {
+                                    console.log("Email exists in the database");
+                                    alert("you already pay for this course ")
+                                    window.location = "course-watch.html"
+
+                                }
+                                else {
+                                    rzp1.open().then(() => {
+                                        window.location = "course-watch.html"
+                                    })
+                                }
+                            });
+                        }
+                    });
+                }
+
+            }
         </script>
 
     </div>
