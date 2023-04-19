@@ -75,20 +75,20 @@ function signIn() {
       firebase.auth().onAuthStateChanged(function (user) {
         var username = user.username;
         sessionStorage.setItem("user",username)
-          if (user) {
-              var userEmail = user.email;
-              var usersRef = firebase.database().ref("data");
-              usersRef.orderByChild("email").equalTo(userEmail).once("value", function (snapshot) {
-                  if (snapshot.exists()) {
-                      console.log("Email exists in the database");
-                      window.location.href = "course-student.html"
-
-                  } else {
-                      console.log("Email does not exist in the database");
-                      window.location.href = "index.html"
-                  }
-              });
-          }
+        const currentUser = firebase.auth().currentUser;
+        const deviceIdentifier = getDeviceIdentifier(); // Get the device identifier for the current device
+        firebase.database().ref(`users/${currentUser.uid}/devices/${deviceIdentifier}`).once('value')
+          .then((snapshot) => {
+            if (snapshot.exists()) {
+              alert('This account is already logged in on another device.')
+              throw new Error('This account is already logged in on another device.'); // Prevent the user from logging in from the new device
+            } else {
+              firebase.database().ref(`users/${currentUser.uid}/devices/${deviceIdentifier}`).set(true); // Allow the user to log in from the new device and store the device identifier in the user's account data
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          });
       });
     })
 }
@@ -129,5 +129,20 @@ function logout(){
     });
 }
 
-// payment function
+// Helper function to get the device identifier
+function getDeviceIdentifier() {
+  
+  // Implement your own device identification logic here, such as using a browser fingerprint library or generating a unique ID and storing it in local storage
+  // return 'example-device-identifier';
+  let deviceIdentifier = localStorage.getItem('deviceIdentifier'); // Check if device identifier is already stored in local storage
+  if (!deviceIdentifier) { // If not, generate a new one
+    const navigatorInfo = window.navigator;
+    const screenInfo = window.screen;
+    const random = Math.random();
+    deviceIdentifier = `${navigatorInfo.userAgent}${navigatorInfo.language}${screenInfo.width}${screenInfo.height}${screenInfo.colorDepth}${random}`; // Combine device attributes and random number to generate the device identifier
+    deviceIdentifier = btoa(deviceIdentifier).substr(0, 16); // Encode device identifier in base64 and take the first 16 characters
+    localStorage.setItem('deviceIdentifier', deviceIdentifier); // Store the device identifier in local storage
+  }
+  return deviceIdentifier;
+}
 
