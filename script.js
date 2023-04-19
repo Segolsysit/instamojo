@@ -68,29 +68,47 @@ function signIn() {
   // const username = document.getElementById('userlog').value;
   const email = document.getElementById('email').value;
   const password = document.getElementById('pass').value;
+  // firebase.auth().onAuthStateChanged(function(user) {
+  //   if (user) {
+  //     // User is signed in, store their user ID in the active node
+  //     firebase.database().ref('/users/' + user.uid + '/active').set(true);
+  //   } else {
+  //     // User is signed out, remove their user ID from the active node
+  //     firebase.database().ref('/users/' + user.uid + '/active').remove();
+  //   }
+  // });
 
   firebase.auth().signInWithEmailAndPassword(email, password)
-  .then(() => {
+  .then(function() {
+    // User signed in successfully, check if they already have an active session
+    // var userId = userCredential.user.uid;
       localStorage.setItem("email", email);
       firebase.auth().onAuthStateChanged(function (user) {
         var username = user.username;
         sessionStorage.setItem("user",username)
-        const currentUser = firebase.auth().currentUser;
-        const deviceIdentifier = getDeviceIdentifier(); // Get the device identifier for the current device
-        firebase.database().ref(`users/${currentUser.uid}/devices/${deviceIdentifier}`).once('value')
-          .then((snapshot) => {
+        // const currentUser = firebase.auth().currentUser;
+        var userId = user.uid;
+        firebase.database().ref('/users/' + userId + '/active').once('value')
+          .then(function(snapshot) {
             if (snapshot.exists()) {
-              alert('This account is already logged in on another device.')
-              throw new Error('This account is already logged in on another device.'); // Prevent the user from logging in from the new device
+              // User already has an active session, deny login
+              firebase.auth().signOut().then(function() {
+                alert('You are already logged in on another device');
+              });
             } else {
-              firebase.database().ref(`users/${currentUser.uid}/devices/${deviceIdentifier}`).set(true); // Allow the user to log in from the new device and store the device identifier in the user's account data
+              let firebaseref  =firebase.database().ref('/users/' + user.uid + '/active').set(true);
+              const itemref = firebase.database().ref('users/' + firebaseref.key)
+              localStorage.setItem("firebasekey",user.uid)
+              
+              // User does not have an active session, allow login
+              window.location="course-student.html"
             }
-          })
-          .catch((error) => {
-            console.error(error);
           });
       });
-    })
+    }).catch(function(error) {
+      // Handle login error
+      console.error(error);
+    });
 }
 
 // forgot password
@@ -116,11 +134,17 @@ function forgotpassword() {
     });
 }
 
-function logout(){
-  firebase.auth().signOut().then(() => {
+function logout() {
+  var key = localStorage.getItem("firebasekey")
+  const itemRef = firebase.database().ref('users/' + key)
+  itemRef.remove()
+  console.log(key);
+  firebase.auth().signOut().then(function(){
       // Sign-out successful.
+
       localStorage.removeItem("email");
       sessionStorage.removeItem('user')
+      localStorage.removeItem("firebasekey")
 
       window.location.href = "login.html";
     }).catch((error) => {

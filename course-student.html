@@ -670,18 +670,18 @@
                 currentuser = sessionStorage.getItem('user')
             }
 
-            function logout() {
-                sessionStorage.removeItem('user')
-                window.location = "index.html"
-                firebase.auth().signOut().then(() => {
-                    // Sign-out successful.
-                    localStorage.removeItem("email");
-                    window.location.href = "login.html";
-                }).catch((error) => {
-                    // An error happened.
-                    console.log(error);
-                });
-            }
+            // function logout() {
+            //     sessionStorage.removeItem('user')
+            //     window.location = "index.html"
+            //     firebase.auth().signOut().then(() => {
+            //         // Sign-out successful.
+            //         localStorage.removeItem("email");
+            //         window.location.href = "login.html";
+            //     }).catch((error) => {
+            //         // An error happened.
+            //         console.log(error);
+            //     });
+            // }
 
             window.onload = function () {
                 getusername();
@@ -704,7 +704,24 @@
                     signoutlink.href = "javascript:logout()"
                 }
             }
-var df;
+            function logout() {
+                var key = localStorage.getItem("firebasekey")
+                const itemRef = firebase.database().ref('users/' + key)
+                itemRef.remove()
+                console.log(key);
+                firebase.auth().signOut().then(function(){
+                    // Sign-out successful.
+
+                    localStorage.removeItem("email");
+                    sessionStorage.removeItem('user')
+                    localStorage.removeItem("firebasekey")
+
+                    window.location.href = "login.html";
+                  }).catch((error) => {
+                    // An error happened.
+                    console.log(error);
+                  });
+            }
             function buythiscourse() {
                 let a = 600;
                 var options = {
@@ -732,7 +749,7 @@ var df;
                         //     firebase.database().ref('data/' + firebase1Ref.key).remove();
 
                         // }, 300000)
-                        function videoexpery(){
+                        function videoexpery() {
                             firebase2Ref.push(payment_data)
                         }
                         console.log(res);
@@ -771,13 +788,13 @@ var df;
                                     // console.log(data);
                                     // console.log(data.singleuser.time);
                                     var userRef = firebase.database().ref("expery-data-1")
-                                    userRef.orderByChild("email").equalTo(userEmail).once("value",function(snapshot){
-                                        if(snapshot.exists()){
+                                    userRef.orderByChild("email").equalTo(userEmail).once("value", function (snapshot) {
+                                        if (snapshot.exists()) {
                                             alert("your course valdity was over if you want to see the video purchase the course again for one year")
                                             rzp1.open()
                                         }
-                                        else{
-                                            window.location="course-watch.html"
+                                        else {
+                                            window.location = "course-watch.html"
                                         }
                                     })
                                     // console.log(snapshot);
@@ -873,7 +890,7 @@ var df;
 
     <script src="assets/plugins/select2/js/select2.min.js"></script>
 
-    <script src="assets/js/script.js"></script>
+    <!-- <script src="assets/js/script.js"></script> -->
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script src="script.js"></script>
 </body>
