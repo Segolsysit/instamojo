@@ -706,7 +706,7 @@
             }
             function logout() {
                 var key = localStorage.getItem("firebasekey")
-                const itemRef = firebase.database().ref('users/' + key)
+                const itemRef = firebase.database().ref('users/' + key + '/active')
                 itemRef.remove()
                 console.log(key);
                 firebase.auth().signOut().then(function(){
