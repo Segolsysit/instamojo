@@ -686,10 +686,10 @@
             window.onload = function () {
                 getusername();
                 if (currentuser === null) {
-                    userlink.innerText = "Login"
-                    userlink.classList.replace("nav-link", "btn")
-                    userlink.classList.add("btn-primary")
-                    userlink.href = "login.html"
+                    // userlink.innerText = "Login"
+                    // userlink.classList.replace("nav-link", "btn")
+                    // userlink.classList.add("btn-primary")
+                    // userlink.href = "login.html"
 
                     signoutlink.innerText = "Register"
                     signoutlink.classList.replace("nav-link", "btn")
@@ -706,8 +706,12 @@
             }
             function logout() {
                 var key = localStorage.getItem("firebasekey")
+                var key1 = localStorage.getItem("keyid")
                 const itemRef = firebase.database().ref('users/' + key + '/active')
-                itemRef.remove()
+                console.log(itemRef);
+                itemRef.remove().then(()=>{
+                    window.location.href = "login.html";
+                })
                 console.log(key);
                 firebase.auth().signOut().then(function(){
                     // Sign-out successful.
@@ -716,7 +720,7 @@
                     sessionStorage.removeItem('user')
                     localStorage.removeItem("firebasekey")
 
-                    window.location.href = "login.html";
+                    // window.location.href = "login.html";
                   }).catch((error) => {
                     // An error happened.
                     console.log(error);

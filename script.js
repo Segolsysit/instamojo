@@ -96,8 +96,9 @@ function signIn() {
                 alert('You are already logged in on another device');
               });
             } else {
-              let firebaseref  =firebase.database().ref('/users/' + user.uid + '/active').push(true);
+              let firebaseref  =firebase.database().ref('/users/' + user.uid + '/active').set(true);
               const itemref = firebase.database().ref('users/' + firebaseref.key)
+              localStorage.setItem("keyid",firebase.key)
               localStorage.setItem("firebasekey",user.uid)
               
               // User does not have an active session, allow login
@@ -136,7 +137,8 @@ function forgotpassword() {
 
 function logout() {
   var key = localStorage.getItem("firebasekey")
-  const itemRef = firebase.database().ref('users/' + key)
+  var key1 = localStorage.getItem("keyid")
+  const itemRef = firebase.database().ref('users/' + key+ '/active')
   itemRef.remove()
   console.log(key);
   firebase.auth().signOut().then(function(){
