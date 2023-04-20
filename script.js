@@ -139,7 +139,9 @@ function logout() {
   var key = localStorage.getItem("firebasekey")
   var key1 = localStorage.getItem("keyid")
   const itemRef = firebase.database().ref('users/' + key+ '/active')
-  itemRef.remove()
+  itemRef.remove().then(()=>{
+    window.location.href = "login.html";
+})
   console.log(key);
   firebase.auth().signOut().then(function(){
       // Sign-out successful.
@@ -147,8 +149,6 @@ function logout() {
       localStorage.removeItem("email");
       sessionStorage.removeItem('user')
       localStorage.removeItem("firebasekey")
-
-      window.location.href = "login.html";
     }).catch((error) => {
       // An error happened.
       console.log(error);

@@ -639,7 +639,7 @@
         }
 
             function logout() {
-                sessionStorage.removeItem('user')
+                sessionStorage.removeItem('advuser')
                 window.location = "index.html"
                 firebase.auth().signOut().then(() => {
                     // Sign-out successful.
@@ -689,12 +689,12 @@
                                 if (snapshot.exists()) {
                                     console.log("Email exists in the database");
                                     // alert("you already pay for this course ")
-                                    window.location = "course-watch.html"
+                                    window.location = "advanced-watch.html"
 
                                 }
                                 else {
                                     alert("you can't pay for this course")
-                                    window.location = "advanced-student.html"
+                                    // window.location = "advanced-student.html"
                                 }
                             });
                         }
@@ -719,7 +719,7 @@
                                 if (snapshot.exists()) {
                                     console.log("Email exists in the database");
                                     // alert("you already pay for this course ")
-                                    window.location = "course-watch.html"
+                                    window.location = "advanced-watch.html"
 
                                 }
                                 else {
@@ -750,7 +750,7 @@
                                 if (snapshot.exists()) {
                                     console.log("Email exists in the database");
                                     // alert("you already pay for this course ")
-                                    window.location = "course-watch.html"
+                                    window.location = "advanced-watch.html"
 
                                 }
                                 else {
