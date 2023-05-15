@@ -499,13 +499,18 @@
             "image": "https://example.com/your_logo",
             "handler": function (res) {
                 var firebase1Ref = firebase.database().ref('data')
+                var firebase2Ref = firebase.database().ref('expery-data')
                 let em = localStorage.getItem("email")
                 var razorpayPaymentId = res.razorpay_payment_id;
+                const myTimeout = setTimeout(videoexpery, 5000);
                 var payment_data = {
                     razorpayPaymentId: razorpayPaymentId,
                     email: em
                 }
                 firebase1Ref.push(payment_data)
+                function videoexpery(){
+                    firebase2Ref.push(payment_data)
+                }
                 console.log(res);
             },
             "callback_url": 'course-watch.html',
@@ -590,7 +595,6 @@
                                 console.log("Email exists in the database");
                                 alert("you already pay for this course ")
                                 window.location="course-watch.html"
-
                             } 
                             else {
                                 rzp1.open().then(() => {

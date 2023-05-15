@@ -58,71 +58,43 @@
                                 </a>
                             </div>
                             <ul class="main-nav">
-                                <li class="has-submenu active">
+                                <li class="has-submenu">
                                     <a href="index.html">Home</a>
                                 </li>
+                                <li class="has-submenu active">
+                                    <a href="index.html">Crash Course <i class="fas fa-chevron-down"></i></a>
+                                    <ul class="submenu">
+                                        <li><a href="course-details.html">Aari work</a></li>
+                                        <li><a href="course-details.html">embroidery</a></li>
+                                        <li><a href="course-details.html">Hand designing</a></li>
+                                        <li><a href="course-details.html">Textile designing</a></li>
+                                        <li><a href="course-details.html">Fasion designing</a></li>
+                                    </ul>
+                                </li>
                                 <li class="has-submenu ">
-                                    <a href="index.html">Online Course <i class="fas fa-chevron-down"></i></a>
+                                    <a href="index.html">Advanced Course <i class="fas fa-chevron-down"></i></a>
                                     <ul class="submenu">
                                         <li><a href="advanced-course.html">Aari work</a></li>
-                                        <li><a href="advanced-course.html">Tailoring</a></li>
-                                        <li><a href="advanced-course.html">Beautician</a></li>
-                                        <li><a href="advanced-course.html">Makeup</a></li>
-                                        <li><a href="advanced-course.html">Nail art & Extension</a></li>
-                                        <li><a href="advanced-course.html">Hairstyling</a></li>
-                                        <li><a href="advanced-course.html">Saree draping</a></li>
-                                        <li><a href="advanced-course.html">Flower Making</a></li>
-                                        <li><a href="advanced-course.html">Baking</a></li>
-                                        <li><a href="advanced-course.html">Mehendi</a></li>
+                                        <li><a href="advanced-course.html">embroidery</a></li>
+                                        <li><a href="advanced-course.html">Hand designing</a></li>
+                                        <li><a href="advanced-course.html">Textile designing</a></li>
+                                        <li><a href="advanced-course.html">Fasion designing</a></li>
                                     </ul>
                                 </li>
                                 <li class="has-submenu ">
-                                    <a href="index.html">Offline Course <i class="fas fa-chevron-down"></i></a>
-                                    <ul class="submenu">
-                                        <li><a href="advanced-course.html">Professional makeup course</a></li>
-                                        <li><a href="advanced-course.html">Professional Hairstyling course</a></li>
-                                        <li><a href="advanced-course.html">Aari</a></li>
-                                        <li><a href="advanced-course.html">Tailoring</a></li>
-                                        <li><a href="advanced-course.html">Mehendi</a></li>
-                                        <li><a href="advanced-course.html">Nail art & Extension</a></li>
-                                    </ul>
-                                </li>
-                                <li class="has-submenu ">
-                                    <a href="index.html">Crash Course<i class="fas fa-chevron-down"></i></a>
-                                    <ul class="submenu">
-                                        <li>Online or Offline</li>
-                                        <li><a href="course-details.html">Aari work (2 days)</a></li>
-                                        <li><a href="course-details.html">Make up (7 days)</a></li>
-                                        <li><a href="course-details-2.html">Saree draping (pre-pleating)</a></li>
-                                        <li><a href="course-details.html">Mehendi (Henna mixlogy & After call)</a></li>
-                                    </ul>
-                                </li>
-                                <li class="has-submenu ">
-                                    <a href="index.html">Advanced or Diplomo <i class="fas fa-chevron-down"></i></a>
-                                    <ul class="submenu">
-                                        <li><a href="advanced-course.html">Diplomo in aari embroidary</a></li>
-                                        <li><a href="advanced-course.html">Diplomo in beauty & wellness</a></li>
-                                        <li><a href="advanced-course.html">Diplomo in fashion designing</a></li>
-                                    </ul>
-                                </li>
-                                <!-- <li class="has-submenu ">
                                     <a href="blog-masonry.html">Blog</a>
                                 </li>
                                 <li class="has-submenu ">
                                     <a href="support.html">Contact Us</a>
-                                </li> -->
-                        
+                                </li>
+
 
                             </ul>
                         </div>
                         <ul class="nav header-navbar-rht align-items-center">
-                         
+
                             <li class="nav-item">
-                                <a id="userlink" class="nav-link login-three-head button"
-                                    href="#"><span>Login</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a id="signoutlink" class="nav-link signin-three-head" href="#">Register</a>
+                                <a id="signoutlink" class="nav-link signin-three-head" href="#">login</a>
                             </li>
                         </ul>
                     </div>
@@ -241,7 +213,7 @@
                                                         <p>0% Completed</p>
                                                     </div>
                                                     <div class="start-leason d-flex align-items-center">
-                                                        <a onclick="buythiscourse2(s)" class="btn btn-primary">Start
+                                                        <a onclick="buythiscourse2()" class="btn btn-primary">Start
                                                             Lesson</a>
                                                     </div>
                                                 </div>
@@ -281,7 +253,7 @@
                                                         <p>0% Completed</p>
                                                     </div>
                                                     <div class="start-leason d-flex align-items-center">
-                                                        <a href="course-lesson.html" class="btn btn-primary">Start
+                                                        <a onclick="buythiscourse3()" class="btn btn-primary">Start
                                                             Lesson</a>
                                                     </div>
                                                 </div>
@@ -647,26 +619,27 @@
 
         <script>
 
-
             const firebaseApp = firebase.initializeApp({
                 apiKey: "AIzaSyAFdtO7NYgHb4DbWXfirZpJpA8UDrMfbKs",
                 authDomain: "advanced-course-data-base.firebaseapp.com",
+                databaseURL: "https://advanced-course-data-base-default-rtdb.firebaseio.com",
                 projectId: "advanced-course-data-base",
                 storageBucket: "advanced-course-data-base.appspot.com",
                 messagingSenderId: "327666396191",
                 appId: "1:327666396191:web:aec68df5a22197d72af92a"
             });
 
-            const auth = firebaseApp.auth();
             let userlink = document.getElementById('userlink')
             let signoutlink = document.getElementById('signoutlink')
             var currentuser = null
-            const user = firebase.auth().currentUser;
+            // const user = firebase.auth().currentUser;
 
-
+            function getusername() { 
+            currentuser = sessionStorage.getItem('advuser')
+        }
 
             function logout() {
-
+                sessionStorage.removeItem('advuser')
                 window.location = "index.html"
                 firebase.auth().signOut().then(() => {
                     // Sign-out successful.
@@ -679,26 +652,117 @@
             }
 
             window.onload = function () {
+                getusername();
                 if (currentuser === null) {
-                    userlink.innerText = "Login"
-                    userlink.classList.replace("nav-link", "btn")
-                    userlink.classList.add("btn-primary")
-                    userlink.href = "advanced-course-login.html"
+                    // userlink.innerText = "Login"
+                    // userlink.classList.replace("nav-link", "btn")
+                    // userlink.classList.add("btn-primary")
+                    // userlink.href = "login.html"
 
-                    // signoutlink.innerText = "Register"
-                    // signoutlink.classList.replace("nav-link", "btn")
-                    // signoutlink.classList.add("btn-success")
-                    // signoutlink.href = "register.html"
+                    signoutlink.innerText = "Login"
+                    signoutlink.classList.replace("nav-link", "btn")
+                    signoutlink.classList.add("btn-success")
+                    signoutlink.href = "register.html"
                 }
                 else {
 
-                    userlink.innerText = "sign out"
-                    userlink.classList.replace("nav-link", "btn")
-                    userlink.classList.add("btn-success")
-                    userlink.onclick = "logout()"
+                    signoutlink.innerText = "sign out"
+                    signoutlink.classList.replace("nav-link", "btn")
+                    signoutlink.classList.add("btn-success")
+                    signoutlink.href = "javascript:logout()"
                 }
             }
 
+            function buythiscourse() {
+                // var rzp1 = new Razorpay(options);sss
+                const login = sessionStorage.getItem("advuser")
+
+                if (login === null) {
+                    window.location = "advanced-course-login.html"
+                }
+                else {
+                    firebase.auth().onAuthStateChanged(function (user) {
+                        if (user) {
+                            var userEmail = user.email;
+                            var usersRef = firebase.database().ref("course 1");
+                            usersRef.orderByChild("email").equalTo(userEmail).once("value", function (snapshot) {
+                                if (snapshot.exists()) {
+                                    console.log("Email exists in the database");
+                                    // alert("you already pay for this course ")
+                                    window.location = "advanced-watch.html"
+
+                                }
+                                else {
+                                    alert("you can't pay for this course")
+                                    // window.location = "advanced-student.html"
+                                }
+                            });
+                        }
+                    });
+                }
+
+            }
+
+            function buythiscourse2() {
+                // var rzp1 = new Razorpay(options);sss
+                const login = sessionStorage.getItem("advuser")
+
+                if (login === null) {
+                    window.location = "advanced-course-login.html"
+                }
+                else {
+                    firebase.auth().onAuthStateChanged(function (user) {
+                        if (user) {
+                            var userEmail = user.email;
+                            var usersRef = firebase.database().ref("course 2");
+                            usersRef.orderByChild("email").equalTo(userEmail).once("value", function (snapshot) {
+                                if (snapshot.exists()) {
+                                    console.log("Email exists in the database");
+                                    // alert("you already pay for this course ")
+                                    window.location = "advanced-watch.html"
+
+                                }
+                                else {
+                                    alert("you can't pay for this course")
+                                    window.location = "advanced-student.html"
+                                }
+                            });
+                        }
+                    });
+                }
+
+            }
+
+            
+            function buythiscourse3() {
+                // var rzp1 = new Razorpay(options);sss
+                const login = sessionStorage.getItem("advuser")
+
+                if (login === null) {
+                    window.location = "advanced-course-login.html"
+                }
+                else {
+                    firebase.auth().onAuthStateChanged(function (user) {
+                        if (user) {
+                            var userEmail = user.email;
+                            var usersRef = firebase.database().ref("course 3");
+                            usersRef.orderByChild("email").equalTo(userEmail).once("value", function (snapshot) {
+                                if (snapshot.exists()) {
+                                    console.log("Email exists in the database");
+                                    // alert("you already pay for this course ")
+                                    window.location = "advanced-watch.html"
+
+                                }
+                                else {
+                                    alert("you can't pay for this course")
+                                    window.location = "advanced-student.html"
+                                }
+                            });
+                        }
+                    });
+                }
+
+            }
         </script>
 
     </div>
@@ -714,6 +778,7 @@
     <script src="assets/js/script.js"></script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script src="script.js"></script>
+    <script src="advscript.js"></script>
 </body>
 
 <!-- Mirrored from dreamslms.dreamguystech.com/html/course-student.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 29 Mar 2023 06:45:15 GMT -->

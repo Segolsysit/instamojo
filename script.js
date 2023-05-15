@@ -68,29 +68,48 @@ function signIn() {
   // const username = document.getElementById('userlog').value;
   const email = document.getElementById('email').value;
   const password = document.getElementById('pass').value;
+  // firebase.auth().onAuthStateChanged(function(user) {
+  //   if (user) {
+  //     // User is signed in, store their user ID in the active node
+  //     firebase.database().ref('/users/' + user.uid + '/active').set(true);
+  //   } else {
+  //     // User is signed out, remove their user ID from the active node
+  //     firebase.database().ref('/users/' + user.uid + '/active').remove();
+  //   }
+  // });
 
   firebase.auth().signInWithEmailAndPassword(email, password)
-  .then(() => {
+  .then(function() {
+    // User signed in successfully, check if they already have an active session
+    // var userId = userCredential.user.uid;
       localStorage.setItem("email", email);
       firebase.auth().onAuthStateChanged(function (user) {
         var username = user.username;
         sessionStorage.setItem("user",username)
-          if (user) {
-              var userEmail = user.email;
-              var usersRef = firebase.database().ref("data");
-              usersRef.orderByChild("email").equalTo(userEmail).once("value", function (snapshot) {
-                  if (snapshot.exists()) {
-                      console.log("Email exists in the database");
-                      window.location.href = "course-student.html"
-
-                  } else {
-                      console.log("Email does not exist in the database");
-                      window.location.href = "index.html"
-                  }
+        // const currentUser = firebase.auth().currentUser;
+        var userId = user.uid;
+        firebase.database().ref('/users/' + userId + '/active').once('value')
+          .then(function(snapshot) {
+            if (snapshot.exists()) {
+              // User already has an active session, deny login
+              firebase.auth().signOut().then(function() {
+                alert('You are already logged in on another device');
               });
-          }
+            } else {
+              let firebaseref  =firebase.database().ref('/users/' + user.uid + '/active').set(true);
+              const itemref = firebase.database().ref('users/' + firebaseref.key)
+              localStorage.setItem("keyid",firebase.key)
+              localStorage.setItem("firebasekey",user.uid)
+              
+              // User does not have an active session, allow login
+              window.location="course-student.html"
+            }
+          });
       });
-    })
+    }).catch(function(error) {
+      // Handle login error
+      console.error(error);
+    });
 }
 
 // forgot password
@@ -116,18 +135,40 @@ function forgotpassword() {
     });
 }
 
-function logout(){
-  firebase.auth().signOut().then(() => {
+function logout() {
+  var key = localStorage.getItem("firebasekey")
+  var key1 = localStorage.getItem("keyid")
+  const itemRef = firebase.database().ref('users/' + key+ '/active')
+  itemRef.remove().then(()=>{
+    window.location.href = "login.html";
+})
+  console.log(key);
+  firebase.auth().signOut().then(function(){
       // Sign-out successful.
+
       localStorage.removeItem("email");
       sessionStorage.removeItem('user')
-
-      window.location.href = "login.html";
+      localStorage.removeItem("firebasekey")
     }).catch((error) => {
       // An error happened.
       console.log(error);
     });
 }
 
-// payment function
+// Helper function to get the device identifier
+function getDeviceIdentifier() {
+  
+  // Implement your own device identification logic here, such as using a browser fingerprint library or generating a unique ID and storing it in local storage
+  // return 'example-device-identifier';
+  let deviceIdentifier = localStorage.getItem('deviceIdentifier'); // Check if device identifier is already stored in local storage
+  if (!deviceIdentifier) { // If not, generate a new one
+    const navigatorInfo = window.navigator;
+    const screenInfo = window.screen;
+    const random = Math.random();
+    deviceIdentifier = `${navigatorInfo.userAgent}${navigatorInfo.language}${screenInfo.width}${screenInfo.height}${screenInfo.colorDepth}${random}`; // Combine device attributes and random number to generate the device identifier
+    deviceIdentifier = btoa(deviceIdentifier).substr(0, 16); // Encode device identifier in base64 and take the first 16 characters
+    localStorage.setItem('deviceIdentifier', deviceIdentifier); // Store the device identifier in local storage
+  }
+  return deviceIdentifier;
+}
 
